@@ -20,7 +20,7 @@ class BaseSortTest(object):
         self.assertEqual(self.sorted(range(100, 1, -1)), range(2, 101))
 
     def test_random_sequence(self):
-        seq = [random.randrange(100) for _ in range(1,10)]
+        seq = [random.randrange(100) for _ in range(1, 100)]
         expected = sorted(seq)
         self.assertEqual(self.sorted(seq), expected)
 
