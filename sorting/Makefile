@@ -3,7 +3,9 @@ test:compile
 	python test.py
 	./sort
 
-compile: 
+compile: sort
+
+sort:
 	g++ sort.cpp -o sort
 
 clean:
