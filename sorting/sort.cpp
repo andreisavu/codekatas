@@ -27,7 +27,7 @@ int check(int seq[], int n) {
     return 1;
 }
 
-void test_sort(char *msg, void (*sort_fn)(int seq[], int n) ) {
+void test_sort(std::string msg, void (*sort_fn)(int seq[], int n) ) {
     std::cout << "Testing: " << msg << " .... ";
 
     int reverse_order[] = {4,3,2,1};
