@@ -25,8 +25,10 @@ class BaseSortTest(object):
         self.assertEqual(self.sorted(seq), expected)
 
 class InsertionSortTest(unittest.TestCase, BaseSortTest):
-    sorted = lambda _, seq: sort.insertion(seq)
+    sorted = lambda _, seq: sort.insertion_sort(seq)
 
+class MergeSortTest(unittest.TestCase, BaseSortTest):
+    sorted = lambda _, seq: sort.merge_sort(seq)
 
 if __name__ == '__main__':
     unittest.main()
