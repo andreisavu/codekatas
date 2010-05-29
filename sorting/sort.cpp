@@ -58,6 +58,34 @@ void merge_sort(int seq[], int n) {
     }
 }
 
+int partition(int seq[], int s, int e) {
+    int d = 0;
+    while(s < e) {
+        if(seq[s] > seq[e]) {
+            swap(seq[s], seq[e]);
+            d = !d;
+        }
+        if(d) {
+            s++;
+        } else {
+            e--;
+        }
+    }
+    return s;
+}
+
+void quick_sort(int seq[], int s, int e) {
+    if(s < e) {
+        int k = partition(seq, s, e);
+        quick_sort(seq, s, k);
+        quick_sort(seq, k+1, e);
+    }
+}
+
+void quick_sort(int seq[], int n) {
+    quick_sort(seq, 0, n-1);
+}
+
 int check(int seq[], int n) {
     for(int i=1; i<n; i++) {
         if(seq[i] < seq[i-1]) {
@@ -108,5 +136,6 @@ void test_sort(std::string msg, void (*sort_fn)(int seq[], int n) ) {
 int main() {
     test_sort("Insertion Sort", insertion_sort);
     test_sort("Merge Sort", merge_sort);
+    test_sort("Quick Sort", quick_sort);
     return 0;
 }
