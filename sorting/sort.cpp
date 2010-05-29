@@ -39,7 +39,7 @@ void merge_sort(int seq[], int n) {
 
         int midle = n / 2, i;
         int *left = new int[midle];
-        int *right = new int[midle];
+        int *right = new int[n-midle];
 
         for(i=0; i<midle; i++) {
             left[i] = seq[i];
