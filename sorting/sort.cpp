@@ -9,6 +9,10 @@ void swap(int &a, int &b) {
     b = aux;
 }
 
+/*
+ * Insert Sort
+ */
+
 void insertion_sort(int seq[], int n) {
     for(int i=0; i<n-1; i++) {
         int j = i + 1;
@@ -18,6 +22,10 @@ void insertion_sort(int seq[], int n) {
         }
     }
 }   
+
+/*
+ * Merge Sort
+ */
 
 void merge(int a[], int na, int b[], int nb, int r[]) {
     int i = 0, j = 0, k = 0;
@@ -58,6 +66,10 @@ void merge_sort(int seq[], int n) {
     }
 }
 
+/*
+ * Quick Sort
+ */ 
+
 int partition(int seq[], int s, int e) {
     int d = 0;
     while(s < e) {
@@ -85,6 +97,49 @@ void quick_sort(int seq[], int s, int e) {
 void quick_sort(int seq[], int n) {
     quick_sort(seq, 0, n-1);
 }
+
+/*
+ * Heap Sort
+ */
+
+void shift_down(int seq[], int s, int e) {
+    int root = s;
+    while(root * 2 + 1 <= e) {
+        int child = root * 2 + 1;
+        if(child < e && seq[child] < seq[child + 1]) {
+            child += 1;
+        }
+        if(seq[root] < seq[child]) {
+            swap(seq[root], seq[child]);
+            root = child;
+        } else {
+            break;
+        }
+    }
+}
+
+void heapify(int seq[], int n) {
+    int start = n / 2;
+    while(start >= 0) {
+        shift_down(seq, start, n-1);
+        start--;
+    }
+}
+
+void heap_sort(int seq[], int n) {
+    heapify(seq, n);
+
+    int end = n - 1;
+    while(end > 0) {
+        swap(seq[end], seq[0]);
+        shift_down(seq, 0, end - 1);
+        end--;
+    }
+}
+
+/*
+ * Sort function testing code
+ */
 
 int check(int seq[], int n) {
     for(int i=1; i<n; i++) {
@@ -123,8 +178,8 @@ void test_sort(std::string msg, void (*sort_fn)(int seq[], int n) ) {
     sort_fn(single_element, 1);
     assert(check(single_element, 1));
 
-    n = 50;
-    int large_random[50];
+    n = 51;
+    int large_random[51];
     random_fill(large_random, n);
 
     sort_fn(large_random, n);
@@ -137,5 +192,6 @@ int main() {
     test_sort("Insertion Sort", insertion_sort);
     test_sort("Merge Sort", merge_sort);
     test_sort("Quick Sort", quick_sort);
+    test_sort("Heap Sort", heap_sort);
     return 0;
 }
