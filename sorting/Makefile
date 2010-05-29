@@ -5,7 +5,7 @@ test:compile
 
 compile: sort
 
-sort:
+sort: sort.cpp
 	g++ sort.cpp -o sort
 
 clean:

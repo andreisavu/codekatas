@@ -1,6 +1,7 @@
 
 #include <iostream>
 #include <assert.h>
+#include <stdlib.h>
 
 void swap(int &a, int &b) {
     int aux = a;
@@ -18,6 +19,45 @@ void insertion_sort(int seq[], int n) {
     }
 }   
 
+void merge(int a[], int na, int b[], int nb, int r[]) {
+    int i = 0, j = 0, k = 0;
+    while(i<na && j<nb) {
+        if(a[i] < b[j]) {
+            r[k++] = a[i++];
+        } else {
+            r[k++] = b[j++];
+        }
+    }
+    for(; i<na; i++) r[k++] = a[i];
+    for(; j<nb; j++) r[k++] = b[j];
+}
+
+void merge_sort(int seq[], int n) {
+    if( n <= 16 ) {
+        insertion_sort(seq, n);
+    } else {
+
+        int midle = n / 2, i;
+        int *left = new int[midle];
+        int *right = new int[midle];
+
+        for(i=0; i<midle; i++) {
+            left[i] = seq[i];
+        }
+        for(; i<n; i++) {
+            right[i-midle] = seq[i];
+        }
+
+        merge_sort(left, midle);
+        merge_sort(right, n - midle);
+
+        merge(left, midle, right, n - midle, seq);
+
+        delete[] left;
+        delete[] right;
+    }
+}
+
 int check(int seq[], int n) {
     for(int i=1; i<n; i++) {
         if(seq[i] < seq[i-1]) {
@@ -25,6 +65,12 @@ int check(int seq[], int n) {
         }
     }
     return 1;
+}
+
+void random_fill(int seq[], int n) {
+    for(int i=0; i<n; i++) {
+        seq[i] = random();
+    }
 }
 
 void test_sort(std::string msg, void (*sort_fn)(int seq[], int n) ) {
@@ -49,10 +95,18 @@ void test_sort(std::string msg, void (*sort_fn)(int seq[], int n) ) {
     sort_fn(single_element, 1);
     assert(check(single_element, 1));
 
+    n = 50;
+    int large_random[50];
+    random_fill(large_random, n);
+
+    sort_fn(large_random, n);
+    assert(check(large_random, n));
+
     std::cout << "Ok." << std::endl;
 }
 
 int main() {
     test_sort("Insertion Sort", insertion_sort);
+    test_sort("Merge Sort", merge_sort);
     return 0;
 }
