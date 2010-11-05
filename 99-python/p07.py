@@ -18,5 +18,6 @@ class FlattenTest(unittest.TestCase):
     assert flatten([[1, 2], 3]) == [1, 2, 3]
     assert flatten([[1, [2, 3]], 4]) == [1, 2, 3, 4]
 
-unittest.main()
+if __name__ == '__main__':
+  unittest.main()
 
