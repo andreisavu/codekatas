@@ -194,8 +194,22 @@ class ListsTest extends FunSuite {
   }
 
   test("P15. Duplicate the elements of a list a given number of times.") {
-    def duplicate[T](n: Int, seq: List[T]): List[T] = {
-      Nil
-    }
+    def duplicate[T](n: Int, seq: List[T]): List[T] = 
+        seq.map(el => (1 to n).map(_ => el).toList).reduceRight(_ ::: _).toList
+        
+    assert(duplicate(3, 1 :: Nil) === List(1,1,1))
+    assert(duplicate(2, 1 :: 2 :: Nil) === List(1, 1, 2, 2))
   }
+  
+  test("P16. Drop every nth element from a list.") {
+    def drop[T](index: Int, seq: List[T]): List[T] = {
+        ((1 to seq.length) zip seq).filter(x => x._1 % index != 0)
+            .toList.map(x => x._2)
+    }
+    assert(drop(3, List('a, 'b, 'c, 'd, 'e, 'f, 'g, 'h, 'i, 
+        'j, 'k)) === List('a, 'b, 'd, 'e, 'g, 'h, 'j, 'k))
+  }
+  
+  
+  
 }
