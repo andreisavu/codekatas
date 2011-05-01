@@ -203,13 +203,38 @@ class ListsTest extends FunSuite {
   
   test("P16. Drop every nth element from a list.") {
     def drop[T](index: Int, seq: List[T]): List[T] = {
-        ((1 to seq.length) zip seq).filter(x => x._1 % index != 0)
-            .toList.map(x => x._2)
+        ((1 to seq.length) zip seq).filter(_._1 % index != 0).toList.map(_._2)
     }
     assert(drop(3, List('a, 'b, 'c, 'd, 'e, 'f, 'g, 'h, 'i, 
         'j, 'k)) === List('a, 'b, 'd, 'e, 'g, 'h, 'j, 'k))
   }
   
+  test("P17. Split a list into two parts") {
+    def split[T](point: Int, seq: List[T]): List[List[T]] = {
+        val pairs = seq zip (1 to seq.length)
+        def filter(cond: ((T, Int)) => Boolean) = 
+            pairs.filter(cond).toList.map(x => x._1)
+        List(filter(_._2 <= point), filter(_._2 > point))
+    }
+    assert(split(1, List(1,2,3)) === List(1 :: Nil, 2 :: 3 :: Nil))
+  }
+
+  test("P18. Extract a slice from a list") {
+    def slice[T](start: Int, stop: Int, seq: List[T]): List[T] = 
+      seq.zip(0 until seq.length).filter(x => x._2 >= start && x._2 < stop)
+        .toList.map(_._1)
+        
+    assert(slice(3, 7, List('a, 'b, 'c, 'd, 'e, 'f, 'g, 
+      'h, 'i, 'j, 'k)) === List('d, 'e, 'f, 'g))
+  }
+
+  test("P19. Rotate a list N placs to the left") {
+    def rotate[T](steps: Int, seq: List[T]): List[T] = {
+      Nil
+    }
+  }
+  
+  /* P20 - easy; same pattern; zip with sequence and filter */
   
   
 }
